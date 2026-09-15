@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Araba Oyunum</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        #oyun {
+            width: 400px;
+            height: 600px;
+            background: #555;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid white;
+        }
+
+        #araba {
+            position: absolute;
+            bottom: 20px;
+            left: 175px;
+            width: 50px;
+            height: 90px;
+            background: red;
+            border-radius: 10px;
+        }
+
+        #puan {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="oyun">
+    <div id="puan">Puan: 0</div>
+    <div id="araba"></div>
+</div>
+
+<script>
+    const araba = document.getElementById("araba");
+    const oyun = document.getElementById("oyun");
+    const puanYazisi = document.getElementById("puan");
+
+    let x = 175;
+    let puan = 0;
+
+    document.addEventListener("keydown", function(event) {
+
+        if (event.key === "ArrowLeft" && x > 0) {
+            x -= 15;
+        }
+
+        if (event.key === "ArrowRight" && x < 350) {
+            x += 15;
+        }
+
+        araba.style.left = x + "px";
+    });
+
+    setInterval(function() {
+        puan++;
+        puanYazisi.textContent = "Puan: " + puan;
+    }, 1000);
+</script>
+
+</body>
+</html>
