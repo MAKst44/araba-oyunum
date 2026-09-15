@@ -1,83 +1,974 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Araba Oyunum</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAK - Trafikten Kaç</title>
 
-    <style>
-        body {
-            margin: 0;
-            background: #222;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        #oyun {
-            width: 400px;
-            height: 600px;
-            background: #555;
-            position: relative;
-            overflow: hidden;
-            border: 5px solid white;
-        }
+body {
+    margin: 0;
+    background: #111;
+    font-family: Arial, sans-serif;
+    color: white;
+    overflow: hidden;
+}
 
-        #araba {
-            position: absolute;
-            bottom: 20px;
-            left: 175px;
-            width: 50px;
-            height: 90px;
-            background: red;
-            border-radius: 10px;
-        }
+/* ANA MENÜ */
+#menu {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(#111, #252525);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
 
-        #puan {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-        }
-    </style>
+#menu h1 {
+    font-size: 45px;
+    margin: 5px;
+}
+
+#menu p {
+    font-size: 20px;
+}
+
+button {
+    border: none;
+    padding: 15px 35px;
+    margin: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.easy {
+    background: #26d45d;
+}
+
+.medium {
+    background: #f2b632;
+}
+
+.hard {
+    background: #e33b3b;
+    color: white;
+}
+
+/* OYUN */
+#game {
+    width: 430px;
+    height: 100vh;
+    max-height: 760px;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+    background: #444;
+    border-left: 8px solid #222;
+    border-right: 8px solid #222;
+}
+
+/* YOL */
+#road {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            to right,
+            #222 0%,
+            #222 8%,
+            #414141 8%,
+            #414141 92%,
+            #222 92%,
+            #222 100%
+        );
+}
+
+/* ŞERİTLER */
+.lane {
+    position: absolute;
+    top: -100px;
+    width: 7px;
+    height: 90px;
+    background: white;
+    border-radius: 5px;
+}
+
+#lane1 {
+    left: 31%;
+}
+
+#lane2 {
+    left: 62%;
+}
+
+/* OYUNCU ARABASI */
+#player {
+    position: absolute;
+    width: 58px;
+    height: 105px;
+    bottom: 35px;
+    left: 186px;
+
+    background: linear-gradient(
+        90deg,
+        #8b0000,
+        #ff3030,
+        #8b0000
+    );
+
+    border-radius: 15px 15px 8px 8px;
+    box-shadow: 0 0 18px #ff3333;
+    z-index: 10;
+}
+
+/* CAM */
+#player::before {
+    content: "";
+    position: absolute;
+    width: 38px;
+    height: 35px;
+    top: 12px;
+    left: 10px;
+    background: #17283a;
+    border-radius: 10px;
+}
+
+/* ARKA SPOYLER */
+#player::after {
+    content: "";
+    position: absolute;
+    width: 48px;
+    height: 7px;
+    bottom: 10px;
+    left: 5px;
+    background: #111;
+    border-radius: 5px;
+}
+
+/* TEKERLEKLER */
+.wheel {
+    position: absolute;
+    width: 10px;
+    height: 27px;
+    background: #080808;
+    border-radius: 5px;
+    top: 32px;
+}
+
+.w1 {
+    left: -7px;
+}
+
+.w2 {
+    right: -7px;
+}
+
+/* TRAFİK */
+.enemy {
+    position: absolute;
+    width: 55px;
+    height: 95px;
+    border-radius: 13px;
+    z-index: 5;
+    box-shadow: 0 0 8px #000;
+}
+
+/* MAVİ */
+.traffic1 {
+    background: linear-gradient(
+        90deg,
+        #0756a8,
+        #5bb5ff,
+        #0756a8
+    );
+}
+
+/* BEYAZ */
+.traffic2 {
+    background: linear-gradient(
+        90deg,
+        #ddd,
+        #fff,
+        #aaa
+    );
+}
+
+/* TURUNCU */
+.traffic3 {
+    background: linear-gradient(
+        90deg,
+        #e87800,
+        #ffc04d,
+        #e87800
+    );
+}
+
+/* POLİS */
+.police {
+    background: linear-gradient(
+        90deg,
+        #111,
+        #eeeeee 45%,
+        #111 55%,
+        #111
+    );
+
+    border: 2px solid #111;
+    box-shadow: 0 0 18px #2266ff;
+}
+
+.police::before {
+    content: "🚨";
+    position: absolute;
+    top: -23px;
+    left: 15px;
+    font-size: 20px;
+}
+
+/* BİLGİ PANELİ */
+#hud {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    right: 12px;
+
+    z-index: 30;
+
+    display: flex;
+    justify-content: space-between;
+
+    font-weight: bold;
+    font-size: 18px;
+
+    text-shadow: 2px 2px 3px black;
+}
+
+/* KUTLAMA */
+#celebration {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,.78);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 200;
+}
+
+.box {
+    background: #222;
+    border: 3px solid white;
+    border-radius: 20px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    box-shadow: 0 0 35px white;
+}
+
+.box h2 {
+    font-size: 35px;
+}
+
+/* OYUN BİTTİ */
+#gameover {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,.88);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 150;
+}
+
+/* MOBİL KONTROLLER */
+#controls {
+    position: fixed;
+
+    bottom: 20px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 20px;
+
+    z-index: 300;
+}
+
+.control {
+    width: 80px;
+    height: 55px;
+
+    background: #ffffff33;
+    color: white;
+
+    border: 2px solid white;
+    border-radius: 12px;
+
+    font-size: 25px;
+}
+</style>
 </head>
 
 <body>
 
-<div id="oyun">
-    <div id="puan">Puan: 0</div>
-    <div id="araba"></div>
+<!-- ANA MENÜ -->
+
+<div id="menu">
+
+    <h1>🏁 TRAFİKTEN KAÇ</h1>
+
+    <p>Zorluk seviyesini seç</p>
+
+    <button class="easy" onclick="startGame('easy')">
+        🟢 KOLAY
+    </button>
+
+    <button class="medium" onclick="startGame('medium')">
+        🟡 ORTA
+    </button>
+
+    <button class="hard" onclick="startGame('hard')">
+        🔴 ZOR
+    </button>
+
 </div>
 
+
+<!-- OYUN -->
+
+<div id="game">
+
+    <div id="road"></div>
+
+    <div class="lane" id="lane1"></div>
+    <div class="lane" id="lane2"></div>
+
+
+    <!-- OYUNCU -->
+
+    <div id="player">
+
+        <div class="wheel w1"></div>
+        <div class="wheel w2"></div>
+
+    </div>
+
+
+    <!-- HUD -->
+
+    <div id="hud">
+
+        <div>
+            🏆 Puan:
+            <span id="score">0</span>
+        </div>
+
+        <div>
+            ❤️
+            <span id="lives">3</span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- KONTROLLER -->
+
+<div id="controls">
+
+    <button class="control" id="left">
+        ⬅️
+    </button>
+
+    <button class="control" id="right">
+        ➡️
+    </button>
+
+</div>
+
+
+<!-- KUTLAMA -->
+
+<div id="celebration">
+
+    <div class="box">
+
+        <h2>🎉 TEBRİKLER! 🎉</h2>
+
+        <p id="celebrationText">
+            MAK seni tebrik ediyor! 🏆
+        </p>
+
+        <button onclick="continueGame()">
+            DEVAM ET
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- OYUN BİTTİ -->
+
+<div id="gameover">
+
+    <div class="box">
+
+        <h2>💥 OYUN BİTTİ</h2>
+
+        <p>
+            Skorun:
+            <span id="finalScore">0</span>
+        </p>
+
+        <button onclick="location.reload()">
+            🔄 TEKRAR OYNA
+        </button>
+
+    </div>
+
+</div>
+
+
 <script>
-    const araba = document.getElementById("araba");
-    const oyun = document.getElementById("oyun");
-    const puanYazisi = document.getElementById("puan");
 
-    let x = 175;
-    let puan = 0;
+const player =
+    document.getElementById("player");
 
-    document.addEventListener("keydown", function(event) {
+const game =
+    document.getElementById("game");
 
-        if (event.key === "ArrowLeft" && x > 0) {
-            x -= 15;
+const scoreText =
+    document.getElementById("score");
+
+const livesText =
+    document.getElementById("lives");
+
+
+/* OYUN DEĞİŞKENLERİ */
+
+let playerX = 186;
+
+let score = 0;
+
+let lives = 3;
+
+let speed = 4;
+
+let playing = false;
+
+let paused = false;
+
+let difficulty = "easy";
+
+let enemies = [];
+
+
+/* HEDEF PUANLAR */
+
+const targetScores = {
+
+    easy: 100,
+
+    medium: 500,
+
+    hard: 1000
+
+};
+
+
+/* OYUNU BAŞLAT */
+
+function startGame(level) {
+
+    difficulty = level;
+
+    document.getElementById("menu")
+        .style.display = "none";
+
+
+    /* BAŞLANGIÇ HIZLARI */
+
+    if (level === "easy")
+        speed = 4;
+
+    if (level === "medium")
+        speed = 5;
+
+    if (level === "hard")
+        speed = 6;
+
+
+    playing = true;
+
+
+    spawnTraffic();
+
+
+    /* POLİS */
+
+    if (level !== "easy") {
+
+        setTimeout(
+            spawnPolice,
+            6000
+        );
+
+    }
+
+
+    gameLoop();
+
+}
+
+
+/* SOLA GİT */
+
+function moveLeft() {
+
+    if (!playing || paused)
+        return;
+
+
+    playerX -= 25;
+
+
+    if (playerX < 45)
+        playerX = 45;
+
+
+    player.style.left =
+        playerX + "px";
+
+}
+
+
+/* SAĞA GİT */
+
+function moveRight() {
+
+    if (!playing || paused)
+        return;
+
+
+    playerX += 25;
+
+
+    if (playerX > 325)
+        playerX = 325;
+
+
+    player.style.left =
+        playerX + "px";
+
+}
+
+
+/* KLAVYE */
+
+document.addEventListener(
+    "keydown",
+    function(e) {
+
+        if (
+            e.key === "ArrowLeft" ||
+            e.key.toLowerCase() === "a"
+        ) {
+
+            moveLeft();
+
         }
 
-        if (event.key === "ArrowRight" && x < 350) {
-            x += 15;
+
+        if (
+            e.key === "ArrowRight" ||
+            e.key.toLowerCase() === "d"
+        ) {
+
+            moveRight();
+
         }
 
-        araba.style.left = x + "px";
-    });
+    }
+);
 
-    setInterval(function() {
-        puan++;
-        puanYazisi.textContent = "Puan: " + puan;
-    }, 1000);
+
+/* TELEFON KONTROLLERİ */
+
+document.getElementById("left")
+    .onclick = moveLeft;
+
+document.getElementById("right")
+    .onclick = moveRight;
+
+
+/* TRAFİK OLUŞTUR */
+
+function spawnTraffic() {
+
+    if (!playing)
+        return;
+
+
+    const enemy =
+        document.createElement("div");
+
+
+    enemy.classList.add(
+        "enemy",
+        "traffic" +
+        (Math.floor(
+            Math.random() * 3
+        ) + 1)
+    );
+
+
+    enemy.style.left =
+        (
+            Math.floor(
+                Math.random() * 5
+            ) * 65 + 55
+        ) + "px";
+
+
+    enemy.style.top =
+        "-120px";
+
+
+    game.appendChild(enemy);
+
+    enemies.push(enemy);
+
+
+    /* ZAMANLA TRAFİK ARTSIN */
+
+    let delay =
+        Math.max(
+            650,
+            1500 - score * 2
+        );
+
+
+    setTimeout(
+        spawnTraffic,
+        delay
+    );
+
+}
+
+
+/* POLİS OLUŞTUR */
+
+function spawnPolice() {
+
+    if (!playing)
+        return;
+
+
+    const police =
+        document.createElement("div");
+
+
+    police.classList.add(
+        "enemy",
+        "police"
+    );
+
+
+    police.style.left =
+        (
+            Math.floor(
+                Math.random() * 4
+            ) * 75 + 60
+        ) + "px";
+
+
+    police.style.top =
+        "-130px";
+
+
+    game.appendChild(police);
+
+    enemies.push(police);
+
+
+    let delay;
+
+
+    if (difficulty === "medium") {
+
+        delay =
+            Math.max(
+                3000,
+                7000 - score * 4
+            );
+
+    } else {
+
+        delay =
+            Math.max(
+                1800,
+                5000 - score * 3
+            );
+
+    }
+
+
+    setTimeout(
+        spawnPolice,
+        delay
+    );
+
+}
+
+
+/* ÇARPIŞMA */
+
+function collision(a, b) {
+
+    const r1 =
+        a.getBoundingClientRect();
+
+    const r2 =
+        b.getBoundingClientRect();
+
+
+    return !(
+        r1.bottom < r2.top ||
+        r1.top > r2.bottom ||
+        r1.right < r2.left ||
+        r1.left > r2.right
+    );
+
+}
+
+
+/* OYUN DÖNGÜSÜ */
+
+function gameLoop() {
+
+    if (!playing)
+        return;
+
+
+    if (!paused) {
+
+
+        /* ŞERİTLER */
+
+        document
+            .querySelectorAll(".lane")
+            .forEach(lane => {
+
+                let y =
+                    parseInt(
+                        lane.style.top || -100
+                    );
+
+
+                y += speed;
+
+
+                if (
+                    y > innerHeight
+                ) {
+
+                    y = -100;
+
+                }
+
+
+                lane.style.top =
+                    y + "px";
+
+            });
+
+
+        /* ARAÇLAR */
+
+        enemies.forEach(
+            (enemy, index) => {
+
+                let y =
+                    parseInt(
+                        enemy.style.top
+                    );
+
+
+                y += speed;
+
+
+                enemy.style.top =
+                    y + "px";
+
+
+                /* ÇARPIŞMA */
+
+                if (
+                    collision(
+                        player,
+                        enemy
+                    )
+                ) {
+
+                    enemy.remove();
+
+                    enemies.splice(
+                        index,
+                        1
+                    );
+
+
+                    lives--;
+
+
+                    livesText.textContent =
+                        lives;
+
+
+                    if (lives <= 0) {
+
+                        endGame();
+
+                    }
+
+                }
+
+
+                /* EKRANDAN ÇIKAN ARAÇ */
+
+                if (
+                    y >
+                    innerHeight + 100
+                ) {
+
+                    enemy.remove();
+
+                    enemies.splice(
+                        index,
+                        1
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* PUAN */
+
+        score++;
+
+
+        scoreText.textContent =
+            score;
+
+
+        /* ZAMANLA HIZ ARTSIN */
+
+        if (
+            score % 300 === 0
+        ) {
+
+            speed += 0.5;
+
+        }
+
+
+        /* HEDEF PUAN */
+
+        if (
+            score ===
+            targetScores[difficulty]
+        ) {
+
+            paused = true;
+
+
+            document
+                .getElementById(
+                    "celebration"
+                )
+                .style.display =
+                "flex";
+
+        }
+
+    }
+
+
+    requestAnimationFrame(
+        gameLoop
+    );
+
+}
+
+
+/* KUTLAMADAN DEVAM */
+
+function continueGame() {
+
+    document
+        .getElementById(
+            "celebration"
+        )
+        .style.display =
+        "none";
+
+
+    paused = false;
+
+
+    requestAnimationFrame(
+        gameLoop
+    );
+
+}
+
+
+/* OYUN BİTTİ */
+
+function endGame() {
+
+    playing = false;
+
+
+    document
+        .getElementById(
+            "finalScore"
+        )
+        .textContent =
+        score;
+
+
+    document
+        .getElementById(
+            "gameover"
+        )
+        .style.display =
+        "flex";
+
+}
+
 </script>
 
 </body>
