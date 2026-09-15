@@ -5,348 +5,358 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MAK - Trafikten Kaç</title>
 
-<style> 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-body {
-    background: #111;
-    color: white;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
+body{
+    background:#111;
+    color:white;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
 }
 
-button {
-    cursor: pointer;
-    border: none;
+button{
+    cursor:pointer;
+    border:none;
 }
 
-/* MENÜ */
+/* =====================
+   MENÜ
+===================== */
 
-#menu {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(135deg, #111827, #020617);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+#menu{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,#111827,#020617);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
 }
 
-.menuBox {
-    width: 90%;
-    max-width: 420px;
-    padding: 30px;
-    background: #1f2937;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 0 30px #000;
+.menuBox{
+    width:90%;
+    max-width:420px;
+    padding:30px;
+    background:#1f2937;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 30px #000;
 }
 
-.menuBox h1 {
-    font-size: 35px;
-    margin-bottom: 10px;
+.menuBox h1{
+    font-size:35px;
+    margin-bottom:10px;
 }
 
-.menuBox p {
-    margin-bottom: 20px;
-    color: #ccc;
+.menuBox p{
+    margin-bottom:20px;
+    color:#ccc;
 }
 
-.difficulty {
-    width: 100%;
-    padding: 15px;
-    margin: 8px 0;
-    border-radius: 12px;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
+.difficulty{
+    width:100%;
+    padding:15px;
+    margin:8px 0;
+    border-radius:12px;
+    color:white;
+    font-size:20px;
+    font-weight:bold;
 }
 
-.easy {
-    background: #16a34a;
+.easy{
+    background:#16a34a;
 }
 
-.medium {
-    background: #d97706;
+.medium{
+    background:#d97706;
 }
 
-.hard {
-    background: #dc2626;
+.hard{
+    background:#dc2626;
 }
 
-/* OYUN */
+/* =====================
+   OYUN
+===================== */
 
-#game {
-    position: relative;
-    width: 430px;
-    height: 100vh;
-    max-height: 850px;
-    margin: auto;
-    overflow: hidden;
-    background: #555;
+#game{
+    position:relative;
+    width:430px;
+    height:100vh;
+    max-height:850px;
+    margin:auto;
+    overflow:hidden;
+    background:#555;
 }
 
 /* DENİZ */
 
-#sea {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 75px;
-    height: 100%;
+#sea{
+    position:absolute;
+    left:0;
+    top:0;
+    width:75px;
+    height:100%;
     background:
-        repeating-linear-gradient(
-            0deg,
-            #168dbb 0px,
-            #168dbb 18px,
-            #4dbbdd 20px,
-            #4dbbdd 24px
-        );
+    repeating-linear-gradient(
+        0deg,
+        #168dbb 0px,
+        #168dbb 18px,
+        #4dbbdd 20px,
+        #4dbbdd 24px
+    );
 }
 
 /* ORMAN */
 
-#forest {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 75px;
-    height: 100%;
-    background: #34752d;
+#forest{
+    position:absolute;
+    right:0;
+    top:0;
+    width:75px;
+    height:100%;
+    background:#34752d;
 }
 
-.tree {
-    position: absolute;
-    width: 35px;
-    height: 55px;
+.tree{
+    position:absolute;
+    width:35px;
+    height:55px;
 }
 
-.tree::before {
-    content: "";
-    position: absolute;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #155e24;
-    box-shadow: 15px 8px 0 #23752e;
+.tree::before{
+    content:"";
+    position:absolute;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#155e24;
+    box-shadow:15px 8px 0 #23752e;
 }
 
-.tree::after {
-    content: "";
-    position: absolute;
-    left: 16px;
-    top: 35px;
-    width: 7px;
-    height: 25px;
-    background: #70452b;
+.tree::after{
+    content:"";
+    position:absolute;
+    left:16px;
+    top:35px;
+    width:7px;
+    height:25px;
+    background:#70452b;
 }
 
 /* YOL */
 
-#road {
-    position: absolute;
-    left: 75px;
-    width: 280px;
-    height: 100%;
-    background: #333;
-    border-left: 6px solid white;
-    border-right: 6px solid white;
+#road{
+    position:absolute;
+    left:75px;
+    width:280px;
+    height:100%;
+    background:#333;
+    border-left:6px solid white;
+    border-right:6px solid white;
 }
 
-/* ŞERİT ÇİZGİLERİ */
+/* ŞERİT */
 
-.line {
-    position: absolute;
-    top: 0;
-    width: 5px;
-    height: 70px;
-    background: white;
+.line{
+    position:absolute;
+    top:0;
+    width:5px;
+    height:70px;
+    background:white;
 }
 
-#line1 {
-    left: 91px;
+#line1{
+    left:91px;
 }
 
-#line2 {
-    left: 182px;
+#line2{
+    left:182px;
 }
 
-/* HUD */
+/* =====================
+   HUD
+===================== */
 
-#hud {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
+#hud{
+    position:absolute;
+    top:10px;
+    left:10px;
+    right:10px;
+    z-index:100;
+    display:flex;
+    justify-content:space-between;
 }
 
-.hud {
-    padding: 10px 14px;
-    background: rgba(0,0,0,0.7);
-    border-radius: 10px;
-    font-weight: bold;
+.hud{
+    padding:10px 14px;
+    background:rgba(0,0,0,.7);
+    border-radius:10px;
+    font-weight:bold;
 }
 
-/* ARABA */
+/* =====================
+   ARABALAR
+===================== */
 
-.car {
-    position: absolute;
-    width: 52px;
-    height: 100px;
-    z-index: 20;
+.car{
+    position:absolute;
+    width:52px;
+    height:100px;
+    z-index:20;
 }
 
-.carBody {
-    position: absolute;
-    left: 5px;
-    top: 5px;
-    width: 42px;
-    height: 90px;
-    border-radius: 12px;
-    background: #1976d2;
-    box-shadow: 0 5px 8px rgba(0,0,0,.5);
+.carBody{
+    position:absolute;
+    left:5px;
+    top:5px;
+    width:42px;
+    height:90px;
+    border-radius:12px;
+    background:#1976d2;
+    box-shadow:0 5px 8px rgba(0,0,0,.5);
 }
 
-.window {
-    position: absolute;
-    left: 12px;
-    top: 17px;
-    width: 28px;
-    height: 25px;
-    background: #345a6b;
-    border-radius: 6px;
-    z-index: 2;
+.window{
+    position:absolute;
+    left:12px;
+    top:17px;
+    width:28px;
+    height:25px;
+    background:#345a6b;
+    border-radius:6px;
+    z-index:2;
 }
 
-.rearWindow {
-    position: absolute;
-    left: 12px;
-    bottom: 15px;
-    width: 28px;
-    height: 17px;
-    background: #253f4b;
-    border-radius: 5px;
-    z-index: 2;
+.rearWindow{
+    position:absolute;
+    left:12px;
+    bottom:15px;
+    width:28px;
+    height:17px;
+    background:#253f4b;
+    border-radius:5px;
+    z-index:2;
 }
 
-.light {
-    position: absolute;
-    width: 7px;
-    height: 9px;
-    background: yellow;
-    top: 7px;
-    z-index: 3;
+.light{
+    position:absolute;
+    width:7px;
+    height:9px;
+    background:#fff5a0;
+    top:7px;
+    z-index:3;
+    box-shadow:0 0 5px #fff;
 }
 
-.light.left {
-    left: 9px;
+.light.left{
+    left:9px;
 }
 
-.light.right {
-    right: 9px;
+.light.right{
+    right:9px;
 }
 
-.tail {
-    position: absolute;
-    width: 7px;
-    height: 8px;
-    background: red;
-    bottom: 7px;
-    z-index: 3;
+.tail{
+    position:absolute;
+    width:7px;
+    height:8px;
+    background:red;
+    bottom:7px;
+    z-index:3;
+    box-shadow:0 0 4px red;
 }
 
-.tail.left {
-    left: 9px;
+.tail.left{
+    left:9px;
 }
 
-.tail.right {
-    right: 9px;
+.tail.right{
+    right:9px;
 }
 
-/* ARABA RENKLERİ */
+/* RENKLER */
 
-.red .carBody {
-    background: #d71919;
+.red .carBody{
+    background:#d71919;
 }
 
-.blue .carBody {
-    background: #1769d1;
+.blue .carBody{
+    background:#1769d1;
 }
 
-.gray .carBody {
-    background: #777;
+.gray .carBody{
+    background:#777;
 }
 
-.black .carBody {
-    background: #111;
+.black .carBody{
+    background:#111;
 }
 
-.white .carBody {
-    background: #ddd;
+.white .carBody{
+    background:#ddd;
 }
 
-.green .carBody {
-    background: #16823b;
+.green .carBody{
+    background:#16823b;
 }
 
 /* SUV */
 
-.suv .carBody {
-    height: 95px;
-    border-radius: 9px;
+.suv .carBody{
+    height:95px;
+    border-radius:9px;
 }
 
 /* OTOBÜS */
 
-.bus {
-    width: 62px;
-    height: 120px;
+.bus{
+    width:62px;
+    height:120px;
 }
 
-.bus .carBody {
-    width: 52px;
-    height: 112px;
-    background: #d32f2f;
-    border-radius: 6px;
+.bus .carBody{
+    width:52px;
+    height:112px;
+    background:#d32f2f;
+    border-radius:6px;
 }
 
-.bus .window {
-    width: 38px;
-    height: 45px;
-    left: 12px;
-    background: #304e5b;
+.bus .window{
+    width:38px;
+    height:45px;
+    left:12px;
+    background:#304e5b;
 }
 
 /* KAMYON */
 
-.truck {
-    width: 62px;
-    height: 120px;
+.truck{
+    width:62px;
+    height:120px;
 }
 
-.truck .carBody {
-    width: 52px;
-    height: 112px;
-    background: #ddd;
-    border-radius: 6px;
+.truck .carBody{
+    width:52px;
+    height:112px;
+    background:#ddd;
+    border-radius:6px;
 }
 
-.truck .window {
-    width: 36px;
-    left: 13px;
+.truck .window{
+    width:36px;
+    left:13px;
 }
 
 /* POLİS */
 
-.police .carBody {
-    background: linear-gradient(
+.police .carBody{
+    background:linear-gradient(
         90deg,
         #172554 0%,
         #f5f5f5 30%,
@@ -355,98 +365,154 @@ button {
     );
 }
 
-.policeLight {
-    position: absolute;
-    left: 11px;
-    top: 3px;
-    width: 30px;
-    height: 7px;
-    background: linear-gradient(
+.policeLight{
+    position:absolute;
+    left:11px;
+    top:3px;
+    width:30px;
+    height:7px;
+    background:linear-gradient(
         90deg,
         red 50%,
         blue 50%
     );
-    z-index: 5;
+    z-index:5;
+    box-shadow:
+        0 0 7px red,
+        0 0 7px blue;
 }
 
-/* OYUNCU */
+/* =====================
+   OYUNCU
+===================== */
 
-#player {
-    left: 187px;
-    bottom: 45px;
+#player{
+    left:187px;
+    bottom:45px;
 }
 
-/* KONTROLLER */
+/* =====================
+   POLİS KIRMIZI UYARI
+===================== */
 
-#controls {
-    position: absolute;
-    bottom: 15px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 15px;
-    z-index: 200;
+#policeAlert{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:95px;
+    z-index:150;
+    pointer-events:none;
+    display:none;
+
+    background:linear-gradient(
+        to top,
+        rgba(255,0,0,.85),
+        rgba(255,0,0,0)
+    );
+
+    border-bottom:7px solid red;
+
+    animation:policeFlash .45s infinite alternate;
 }
 
-.control {
-    width: 65px;
-    height: 55px;
-    border-radius: 15px;
-    background: rgba(0,0,0,.75);
-    color: white;
-    font-size: 25px;
+@keyframes policeFlash{
+
+    from{
+        opacity:.25;
+    }
+
+    to{
+        opacity:1;
+    }
 }
 
-/* EKRANLAR */
-
-.overlay {
-    position: fixed;
-    inset: 0;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0,0,0,.9);
-    z-index: 2000;
+#policeAlertText{
+    position:absolute;
+    bottom:12px;
+    width:100%;
+    text-align:center;
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+    text-shadow:0 0 8px red;
 }
 
-.box {
-    width: 90%;
-    max-width: 420px;
-    padding: 30px;
-    background: #202020;
-    border-radius: 20px;
-    text-align: center;
+/* =====================
+   KONTROLLER
+===================== */
+
+#controls{
+    position:absolute;
+    bottom:15px;
+    left:0;
+    right:0;
+    display:flex;
+    justify-content:space-between;
+    padding:0 15px;
+    z-index:200;
 }
 
-.box h2 {
-    font-size: 32px;
-    margin-bottom: 15px;
+.control{
+    width:65px;
+    height:55px;
+    border-radius:15px;
+    background:rgba(0,0,0,.75);
+    color:white;
+    font-size:25px;
 }
 
-.box p {
-    font-size: 20px;
-    margin: 15px 0;
+/* =====================
+   EKRANLAR
+===================== */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,.9);
+    z-index:2000;
 }
 
-.action {
-    padding: 13px 20px;
-    margin: 5px;
-    border-radius: 10px;
-    background: #2563eb;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
+.box{
+    width:90%;
+    max-width:420px;
+    padding:30px;
+    background:#202020;
+    border-radius:20px;
+    text-align:center;
 }
 
-.score {
-    font-size: 35px;
-    color: #facc15;
-    margin: 15px;
+.box h2{
+    font-size:32px;
+    margin-bottom:15px;
 }
 
-.prison {
-    font-size: 65px;
+.box p{
+    font-size:20px;
+    margin:15px 0;
+}
+
+.action{
+    padding:13px 20px;
+    margin:5px;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.score{
+    font-size:35px;
+    color:#facc15;
+    margin:15px;
+}
+
+.prison{
+    font-size:65px;
 }
 </style>
 </head>
@@ -463,15 +529,18 @@ button {
 
         <p>MAK tarafından geliştirildi</p>
 
-        <button class="difficulty easy" onclick="startGame('easy')">
+        <button class="difficulty easy"
+        onclick="startGame('easy')">
             🟢 KOLAY
         </button>
 
-        <button class="difficulty medium" onclick="startGame('medium')">
+        <button class="difficulty medium"
+        onclick="startGame('medium')">
             🟡 ORTA
         </button>
 
-        <button class="difficulty hard" onclick="startGame('hard')">
+        <button class="difficulty hard"
+        onclick="startGame('hard')">
             🔴 ZOR
         </button>
 
@@ -487,21 +556,37 @@ button {
 
     <div id="forest">
 
-        <div class="tree" style="top:5px;left:10px;"></div>
-        <div class="tree" style="top:130px;left:35px;"></div>
-        <div class="tree" style="top:260px;left:5px;"></div>
-        <div class="tree" style="top:400px;left:35px;"></div>
-        <div class="tree" style="top:550px;left:10px;"></div>
-        <div class="tree" style="top:700px;left:35px;"></div>
+        <div class="tree"
+        style="top:5px;left:10px;"></div>
+
+        <div class="tree"
+        style="top:130px;left:35px;"></div>
+
+        <div class="tree"
+        style="top:260px;left:5px;"></div>
+
+        <div class="tree"
+        style="top:400px;left:35px;"></div>
+
+        <div class="tree"
+        style="top:550px;left:10px;"></div>
+
+        <div class="tree"
+        style="top:700px;left:35px;"></div>
 
     </div>
 
     <div id="road">
 
-        <div id="line1" class="line"></div>
-        <div id="line2" class="line"></div>
+        <div id="line1"
+        class="line"></div>
+
+        <div id="line2"
+        class="line"></div>
 
     </div>
+
+    <!-- HUD -->
 
     <div id="hud">
 
@@ -515,12 +600,24 @@ button {
 
     </div>
 
-    <!-- OYUNCU ARABASI -->
+    <!-- POLİS UYARISI -->
+
+    <div id="policeAlert">
+
+        <div id="policeAlertText">
+            🚨 POLİS YAKLAŞIYOR 🚨
+        </div>
+
+    </div>
+
+    <!-- OYUNCU -->
 
     <div id="player" class="car blue">
 
         <div class="carBody"></div>
+
         <div class="window"></div>
+
         <div class="rearWindow"></div>
 
         <div class="light left"></div>
@@ -531,16 +628,25 @@ button {
 
     </div>
 
+    <!-- KONTROLLER -->
+
     <div id="controls">
 
-        <button class="control" onclick="moveLeft()">⬅️</button>
-        <button class="control" onclick="moveRight()">➡️</button>
+        <button class="control"
+        onclick="moveLeft()">
+            ⬅️
+        </button>
+
+        <button class="control"
+        onclick="moveRight()">
+            ➡️
+        </button>
 
     </div>
 
 </div>
 
-<!-- POLİS UYARISI -->
+<!-- POLİS İLK ÇARPIŞMA -->
 
 <div id="warning" class="overlay">
 
@@ -548,9 +654,12 @@ button {
 
         <h2>🚓 DİKKAT!</h2>
 
-        <p>Polisle ilk kez çarpıştın!</p>
+        <p>
+            Polisle ilk kez çarpıştın!
+        </p>
 
-        <button class="action" onclick="continueGame()">
+        <button class="action"
+        onclick="continueGame()">
             DEVAM ET
         </button>
 
@@ -566,17 +675,21 @@ button {
 
         <h2>🏆 TEBRİKLER!</h2>
 
-        <p>MAK seni tebrik ediyor! 🏆</p>
+        <p>
+            MAK seni tebrik ediyor! 🏆
+        </p>
 
         <div class="score">
             <span id="winScore">0</span>
         </div>
 
-        <button class="action" onclick="restartGame()">
+        <button class="action"
+        onclick="restartGame()">
             🔄 TEKRAR OYNA
         </button>
 
-        <button class="action" onclick="backToMenu()">
+        <button class="action"
+        onclick="backToMenu()">
             🏠 MENÜ
         </button>
 
@@ -584,7 +697,7 @@ button {
 
 </div>
 
-<!-- NORMAL OYUN BİTTİ -->
+<!-- NORMAL GAME OVER -->
 
 <div id="gameOver" class="overlay">
 
@@ -597,14 +710,17 @@ button {
         </p>
 
         <div class="score">
-            Skor: <span id="finalScore">0</span>
+            Skor:
+            <span id="finalScore">0</span>
         </div>
 
-        <button class="action" onclick="restartGame()">
+        <button class="action"
+        onclick="restartGame()">
             🔄 TEKRAR OYNA
         </button>
 
-        <button class="action" onclick="backToMenu()">
+        <button class="action"
+        onclick="backToMenu()">
             🏠 MENÜ
         </button>
 
@@ -612,7 +728,7 @@ button {
 
 </div>
 
-<!-- POLİS OYUN BİTTİ -->
+<!-- POLİS GAME OVER -->
 
 <div id="policeOver" class="overlay">
 
@@ -629,14 +745,17 @@ button {
         </h2>
 
         <div class="score">
-            Skor: <span id="policeScore">0</span>
+            Skor:
+            <span id="policeScore">0</span>
         </div>
 
-        <button class="action" onclick="restartGame()">
+        <button class="action"
+        onclick="restartGame()">
             🔄 TEKRAR OYNA
         </button>
 
-        <button class="action" onclick="backToMenu()">
+        <button class="action"
+        onclick="backToMenu()">
             🏠 MENÜ
         </button>
 
@@ -646,19 +765,42 @@ button {
 
 <script>
 
-const game = document.getElementById("game");
-const player = document.getElementById("player");
+/* =====================
+   DEĞİŞKENLER
+===================== */
 
-const livesText = document.getElementById("lives");
-const scoreText = document.getElementById("score");
+const game =
+document.getElementById("game");
 
-const menu = document.getElementById("menu");
-const warning = document.getElementById("warning");
-const win = document.getElementById("win");
-const gameOver = document.getElementById("gameOver");
-const policeOver = document.getElementById("policeOver");
+const player =
+document.getElementById("player");
 
-const lanes = [98, 189, 280];
+const livesText =
+document.getElementById("lives");
+
+const scoreText =
+document.getElementById("score");
+
+const menu =
+document.getElementById("menu");
+
+const warning =
+document.getElementById("warning");
+
+const win =
+document.getElementById("win");
+
+const gameOver =
+document.getElementById("gameOver");
+
+const policeOver =
+document.getElementById("policeOver");
+
+const policeAlert =
+document.getElementById("policeAlert");
+
+const lanes =
+[98,189,280];
 
 let currentLane = 1;
 
@@ -672,65 +814,59 @@ let paused = false;
 
 let policeHits = 0;
 
-/*
-    NORMAL ELENME SAYISI
-
-    1. oyun:
-    Ehliyeti kasaptan mı aldın?
-
-    2. oyun:
-    Acemi misin?
-
-    3. oyun:
-    Ehliyeti kasaptan mı aldın?
-
-    4. oyun:
-    Acemi misin?
-*/
-
 let normalGameOverCount = 0;
 
 let traffic = [];
 let policeCars = [];
 
-let trafficTimer;
-let policeTimer;
-let scoreTimer;
-let animation;
+let trafficTimer = null;
+let policeTimer = null;
+let scoreTimer = null;
+let animation = null;
+
+let linePosition = 0;
+
+/* =====================
+   AYARLAR
+===================== */
 
 const settings = {
 
-    easy: {
-        speed: 3,
-        spawn: 1100,
-        police: 9000
+    easy:{
+        speed:3,
+        spawn:1300,
+        police:9000
     },
 
-    medium: {
-        speed: 4,
-        spawn: 800,
-        police: 6500
+    medium:{
+        speed:4,
+        spawn:1000,
+        police:6500
     },
 
-    hard: {
-        speed: 5,
-        spawn: 600,
-        police: 4500
+    hard:{
+        speed:5,
+        spawn:800,
+        police:4500
     }
 
 };
 
 const targets = {
 
-    easy: 100,
-    medium: 500,
-    hard: 1000
+    easy:100,
+
+    medium:500,
+
+    hard:1000
 
 };
 
-/* OYUNU BAŞLAT */
+/* =====================
+   OYUNU BAŞLAT
+===================== */
 
-function startGame(level) {
+function startGame(level){
 
     difficulty = level;
 
@@ -740,6 +876,8 @@ function startGame(level) {
     policeOver.style.display = "none";
     warning.style.display = "none";
     win.style.display = "none";
+
+    policeAlert.style.display = "none";
 
     lives = 5;
     score = 0;
@@ -753,7 +891,8 @@ function startGame(level) {
     livesText.textContent = lives;
     scoreText.textContent = score;
 
-    player.style.left = lanes[currentLane] + "px";
+    player.style.left =
+        lanes[currentLane] + "px";
 
     clearEverything();
 
@@ -764,13 +903,16 @@ function startGame(level) {
     gameLoop();
 }
 
-/* SOL */
+/* =====================
+   HAREKET
+===================== */
 
-function moveLeft() {
+function moveLeft(){
 
-    if (!playing || paused) return;
+    if(!playing || paused)
+        return;
 
-    if (currentLane > 0) {
+    if(currentLane > 0){
 
         currentLane--;
 
@@ -779,13 +921,12 @@ function moveLeft() {
     }
 }
 
-/* SAĞ */
+function moveRight(){
 
-function moveRight() {
+    if(!playing || paused)
+        return;
 
-    if (!playing || paused) return;
-
-    if (currentLane < 2) {
+    if(currentLane < 2){
 
         currentLane++;
 
@@ -796,81 +937,96 @@ function moveRight() {
 
 /* KLAVYE */
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener(
+    "keydown",
+    function(event){
 
-    if (event.key === "ArrowLeft") {
-        moveLeft();
+        if(event.key === "ArrowLeft"){
+            moveLeft();
+        }
+
+        if(event.key === "ArrowRight"){
+            moveRight();
+        }
+
     }
+);
 
-    if (event.key === "ArrowRight") {
-        moveRight();
-    }
+/* =====================
+   ARABA OLUŞTUR
+===================== */
 
-});
+function createCar(type,lane,y){
 
-/* ARABA OLUŞTUR */
+    const car =
+        document.createElement("div");
 
-function createCar(type, lane, y) {
-
-    const car = document.createElement("div");
-
-    car.className = "car " + type;
+    car.className =
+        "car " + type;
 
     car.style.left =
         lanes[lane] + "px";
 
-    car.style.top = y + "px";
+    car.style.top =
+        y + "px";
 
     const body =
         document.createElement("div");
 
-    body.className = "carBody";
+    body.className =
+        "carBody";
 
     car.appendChild(body);
 
     const window =
         document.createElement("div");
 
-    window.className = "window";
+    window.className =
+        "window";
 
     car.appendChild(window);
 
     const rear =
         document.createElement("div");
 
-    rear.className = "rearWindow";
+    rear.className =
+        "rearWindow";
 
     car.appendChild(rear);
 
     const light1 =
         document.createElement("div");
 
-    light1.className = "light left";
+    light1.className =
+        "light left";
 
     car.appendChild(light1);
 
     const light2 =
         document.createElement("div");
 
-    light2.className = "light right";
+    light2.className =
+        "light right";
 
     car.appendChild(light2);
 
     const tail1 =
         document.createElement("div");
 
-    tail1.className = "tail left";
+    tail1.className =
+        "tail left";
 
     car.appendChild(tail1);
 
     const tail2 =
         document.createElement("div");
 
-    tail2.className = "tail right";
+    tail2.className =
+        "tail right";
 
     car.appendChild(tail2);
 
-    if (type === "police") {
+    if(type === "police"){
 
         const policeLight =
             document.createElement("div");
@@ -886,68 +1042,130 @@ function createCar(type, lane, y) {
     return car;
 }
 
-/* TRAFİK */
+/* =====================
+   TRAFİK
+===================== */
 
-function startTraffic() {
+function startTraffic(){
 
-    function spawnTraffic() {
+    function spawnTraffic(){
 
-        if (!playing) return;
+        if(!playing)
+            return;
 
-        if (!paused) {
+        if(!paused){
 
-            const lane =
-                Math.floor(Math.random() * 3);
+            /*
+               BOŞLUK SİSTEMİ
 
-            const types = [
-                "red",
-                "blue",
-                "gray",
-                "black",
-                "white",
-                "green"
-            ];
+               Yeni araba, başka bir arabanın
+               çok yakınına doğmaz.
 
-            const randomColor =
-                types[
-                    Math.floor(
-                        Math.random() * types.length
-                    )
-                ];
+               Böylece aralarında daha geniş
+               geçiş alanı oluşur.
+            */
 
-            const vehicleTypes = [
-                "normal",
-                "suv",
-                "bus",
-                "truck"
-            ];
+            const possibleLanes =
+                [0,1,2];
 
-            const vehicle =
-                vehicleTypes[
-                    Math.floor(
-                        Math.random() *
-                        vehicleTypes.length
-                    )
-                ];
-
-            let className = randomColor;
-
-            if (vehicle !== "normal") {
-                className += " " + vehicle;
-            }
-
-            const car =
-                createCar(
-                    className,
-                    lane,
-                    -130
+            const shuffled =
+                possibleLanes.sort(
+                    () => Math.random() - 0.5
                 );
 
-            traffic.push({
-                element: car,
-                lane: lane,
-                y: -130
-            });
+            let selectedLane = null;
+
+            for(
+                let i=0;
+                i<shuffled.length;
+                i++
+            ){
+
+                const testLane =
+                    shuffled[i];
+
+                const blocked =
+                    traffic.some(
+                        car =>
+                        car.lane === testLane &&
+                        car.y < 260
+                    );
+
+                if(!blocked){
+
+                    selectedLane =
+                        testLane;
+
+                    break;
+                }
+            }
+
+            /*
+               Uygun şerit yoksa bu turda
+               araba oluşturmuyoruz.
+            */
+
+            if(selectedLane !== null){
+
+                const colors = [
+                    "red",
+                    "blue",
+                    "gray",
+                    "black",
+                    "white",
+                    "green"
+                ];
+
+                const color =
+                    colors[
+                        Math.floor(
+                            Math.random() *
+                            colors.length
+                        )
+                    ];
+
+                const vehicleTypes = [
+                    "normal",
+                    "normal",
+                    "suv",
+                    "bus",
+                    "truck"
+                ];
+
+                const vehicle =
+                    vehicleTypes[
+                        Math.floor(
+                            Math.random() *
+                            vehicleTypes.length
+                        )
+                    ];
+
+                let className =
+                    color;
+
+                if(vehicle !== "normal"){
+
+                    className +=
+                        " " + vehicle;
+                }
+
+                const car =
+                    createCar(
+                        className,
+                        selectedLane,
+                        -140
+                    );
+
+                traffic.push({
+
+                    element:car,
+
+                    lane:selectedLane,
+
+                    y:-140
+
+                });
+            }
         }
 
         trafficTimer =
@@ -960,18 +1178,23 @@ function startTraffic() {
     spawnTraffic();
 }
 
-/* POLİS */
+/* =====================
+   POLİS
+===================== */
 
-function startPolice() {
+function startPolice(){
 
-    function spawnPolice() {
+    function spawnPolice(){
 
-        if (!playing) return;
+        if(!playing)
+            return;
 
-        if (!paused) {
+        if(!paused){
 
             const lane =
-                Math.floor(Math.random() * 3);
+                Math.floor(
+                    Math.random()*3
+                );
 
             const car =
                 createCar(
@@ -981,10 +1204,22 @@ function startPolice() {
                 );
 
             policeCars.push({
-                element: car,
-                lane: lane,
-                y: game.clientHeight + 100
+
+                element:car,
+
+                lane:lane,
+
+                y:
+                game.clientHeight + 100
             });
+
+            /*
+               POLİS GELİNCE ALTTA
+               KIRMIZI UYARI BAŞLAR.
+            */
+
+            policeAlert.style.display =
+                "block";
         }
 
         policeTimer =
@@ -1001,37 +1236,46 @@ function startPolice() {
         );
 }
 
-/* SKOR */
+/* =====================
+   SKOR
+===================== */
 
-function startScore() {
+function startScore(){
 
-    function addScore() {
+    function addScore(){
 
-        if (!playing) return;
+        if(!playing)
+            return;
 
-        if (!paused) {
+        if(!paused){
 
             const points =
                 Math.floor(
-                    Math.random() * 4
+                    Math.random()*4
                 ) + 3;
 
             score += points;
 
-            scoreText.textContent = score;
+            scoreText.textContent =
+                score;
 
-            if (
+            if(
                 score >=
                 targets[difficulty]
-            ) {
+            ){
 
                 paused = true;
 
+                policeAlert.style.display =
+                    "none";
+
                 document.getElementById(
                     "winScore"
-                ).textContent = score;
+                ).textContent =
+                    score;
 
-                win.style.display = "flex";
+                win.style.display =
+                    "flex";
 
                 return;
             }
@@ -1041,7 +1285,7 @@ function startScore() {
             setTimeout(
                 addScore,
                 Math.floor(
-                    Math.random() * 2000
+                    Math.random()*2000
                 ) + 1000
             );
     }
@@ -1053,35 +1297,46 @@ function startScore() {
         );
 }
 
-/* OYUN DÖNGÜSÜ */
+/* =====================
+   OYUN DÖNGÜSÜ
+===================== */
 
-function gameLoop() {
+function gameLoop(){
 
-    if (!playing) return;
+    if(!playing)
+        return;
 
-    if (!paused) {
+    if(!paused){
 
         moveTraffic();
+
         movePolice();
+
         moveLines();
+
         checkCollisions();
     }
 
     animation =
-        requestAnimationFrame(gameLoop);
+        requestAnimationFrame(
+            gameLoop
+        );
 }
 
-/* TRAFİK HAREKETİ */
+/* =====================
+   TRAFİK HAREKETİ
+===================== */
 
-function moveTraffic() {
+function moveTraffic(){
 
-    for (
-        let i = traffic.length - 1;
-        i >= 0;
+    for(
+        let i=traffic.length-1;
+        i>=0;
         i--
-    ) {
+    ){
 
-        const car = traffic[i];
+        const car =
+            traffic[i];
 
         car.y +=
             settings[difficulty].speed;
@@ -1089,29 +1344,32 @@ function moveTraffic() {
         car.element.style.top =
             car.y + "px";
 
-        if (
+        if(
             car.y >
             game.clientHeight + 150
-        ) {
+        ){
 
             car.element.remove();
 
-            traffic.splice(i, 1);
+            traffic.splice(i,1);
         }
     }
 }
 
-/* POLİS HAREKETİ */
+/* =====================
+   POLİS HAREKETİ
+===================== */
 
-function movePolice() {
+function movePolice(){
 
-    for (
-        let i = policeCars.length - 1;
-        i >= 0;
+    for(
+        let i=policeCars.length-1;
+        i>=0;
         i--
-    ) {
+    ){
 
-        const car = policeCars[i];
+        const car =
+            policeCars[i];
 
         car.y -=
             settings[difficulty].speed;
@@ -1119,40 +1377,55 @@ function movePolice() {
         car.element.style.top =
             car.y + "px";
 
-        if (car.y < -150) {
+        /*
+           Polis ekrandan çıkarsa
+           kırmızı uyarı da söner.
+        */
+
+        if(car.y < -150){
 
             car.element.remove();
 
-            policeCars.splice(i, 1);
+            policeCars.splice(i,1);
         }
+    }
+
+    if(policeCars.length === 0){
+
+        policeAlert.style.display =
+            "none";
     }
 }
 
-/* YOL ÇİZGİLERİ */
+/* =====================
+   YOL ÇİZGİLERİ
+===================== */
 
-let linePosition = 0;
-
-function moveLines() {
+function moveLines(){
 
     linePosition +=
         settings[difficulty].speed;
 
-    if (linePosition > 80) {
+    if(linePosition > 80){
         linePosition = 0;
     }
 
-    document.getElementById("line1")
-        .style.top =
+    document.getElementById(
+        "line1"
+    ).style.top =
         linePosition + "px";
 
-    document.getElementById("line2")
-        .style.top =
+    document.getElementById(
+        "line2"
+    ).style.top =
         linePosition + "px";
 }
 
-/* ÇARPIŞMA */
+/* =====================
+   ÇARPIŞMA
+===================== */
 
-function isCollision(a, b) {
+function isCollision(a,b){
 
     const A =
         a.getBoundingClientRect();
@@ -1160,7 +1433,7 @@ function isCollision(a, b) {
     const B =
         b.getBoundingClientRect();
 
-    return (
+    return(
         A.left < B.right &&
         A.right > B.left &&
         A.top < B.bottom &&
@@ -1168,38 +1441,41 @@ function isCollision(a, b) {
     );
 }
 
-/* ÇARPIŞMALARI KONTROL ET */
+/* =====================
+   ÇARPIŞMA KONTROL
+===================== */
 
-function checkCollisions() {
+function checkCollisions(){
 
-    /* NORMAL TRAFİK */
+    /* NORMAL ARABALAR */
 
-    for (
-        let i = traffic.length - 1;
-        i >= 0;
+    for(
+        let i=traffic.length-1;
+        i>=0;
         i--
-    ) {
+    ){
 
-        const car = traffic[i];
+        const car =
+            traffic[i];
 
-        if (
+        if(
             car.lane === currentLane &&
             isCollision(
                 player,
                 car.element
             )
-        ) {
+        ){
 
             car.element.remove();
 
-            traffic.splice(i, 1);
+            traffic.splice(i,1);
 
             lives--;
 
             livesText.textContent =
                 lives;
 
-            if (lives <= 0) {
+            if(lives <= 0){
 
                 endGame();
 
@@ -1210,36 +1486,40 @@ function checkCollisions() {
 
     /* POLİS */
 
-    for (
-        let i = policeCars.length - 1;
-        i >= 0;
+    for(
+        let i=policeCars.length-1;
+        i>=0;
         i--
-    ) {
+    ){
 
-        const car = policeCars[i];
+        const car =
+            policeCars[i];
 
-        if (
+        if(
             car.lane === currentLane &&
             isCollision(
                 player,
                 car.element
             )
-        ) {
+        ){
 
             car.element.remove();
 
-            policeCars.splice(i, 1);
+            policeCars.splice(i,1);
 
             policeHits++;
 
-            if (policeHits === 1) {
+            if(policeHits === 1){
 
                 paused = true;
+
+                policeAlert.style.display =
+                    "none";
 
                 warning.style.display =
                     "flex";
 
-            } else {
+            }else{
 
                 endPoliceGame();
 
@@ -1249,62 +1529,77 @@ function checkCollisions() {
     }
 }
 
-/* NORMAL OYUN BİTTİ */
+/* =====================
+   NORMAL GAME OVER
+===================== */
 
-function endGame() {
+function endGame(){
 
     playing = false;
     paused = true;
+
+    policeAlert.style.display =
+        "none";
 
     clearTimers();
 
     normalGameOverCount++;
 
-    if (
-        normalGameOverCount % 2 === 1
-    ) {
-
+    const message =
         document.getElementById(
             "normalGameOverMessage"
-        ).textContent =
+        );
+
+    if(
+        normalGameOverCount % 2 === 1
+    ){
+
+        message.textContent =
             "Ehliyeti kasaptan mı aldın? 😂";
 
-    } else {
+    }else{
 
-        document.getElementById(
-            "normalGameOverMessage"
-        ).textContent =
+        message.textContent =
             "Acemi misin? 😂";
     }
 
     document.getElementById(
         "finalScore"
-    ).textContent = score;
+    ).textContent =
+        score;
 
     gameOver.style.display =
         "flex";
 }
 
-/* POLİS GAME OVER */
+/* =====================
+   POLİS GAME OVER
+===================== */
 
-function endPoliceGame() {
+function endPoliceGame(){
 
     playing = false;
     paused = true;
+
+    policeAlert.style.display =
+        "none";
 
     clearTimers();
 
     document.getElementById(
         "policeScore"
-    ).textContent = score;
+    ).textContent =
+        score;
 
     policeOver.style.display =
         "flex";
 }
 
-/* POLİS UYARISINDAN DEVAM */
+/* =====================
+   DEVAM
+===================== */
 
-function continueGame() {
+function continueGame(){
 
     warning.style.display =
         "none";
@@ -1312,21 +1607,20 @@ function continueGame() {
     paused = false;
 }
 
-/* TEKRAR OYNA */
+/* =====================
+   TEKRAR
+===================== */
 
-function restartGame() {
-
-    /*
-        Burada normalGameOverCount
-        sıfırlanmıyor.
-    */
+function restartGame(){
 
     startGame(difficulty);
 }
 
-/* MENÜ */
+/* =====================
+   MENÜ
+===================== */
 
-function backToMenu() {
+function backToMenu(){
 
     playing = false;
     paused = false;
@@ -1337,38 +1631,65 @@ function backToMenu() {
 
     removeCars();
 
-    gameOver.style.display = "none";
-    policeOver.style.display = "none";
-    warning.style.display = "none";
-    win.style.display = "none";
+    policeAlert.style.display =
+        "none";
 
-    menu.style.display = "flex";
+    gameOver.style.display =
+        "none";
+
+    policeOver.style.display =
+        "none";
+
+    warning.style.display =
+        "none";
+
+    win.style.display =
+        "none";
+
+    menu.style.display =
+        "flex";
 }
 
-/* HER ŞEYİ TEMİZLE */
+/* =====================
+   TEMİZLE
+===================== */
 
-function clearTimers() {
+function clearTimers(){
 
     clearTimeout(trafficTimer);
+
     clearTimeout(policeTimer);
+
     clearTimeout(scoreTimer);
 
-    cancelAnimationFrame(animation);
+    if(animation){
+
+        cancelAnimationFrame(
+            animation
+        );
+    }
+
+    trafficTimer = null;
+    policeTimer = null;
+    scoreTimer = null;
+    animation = null;
 }
 
-/* ARABALARI SİL */
+/* =====================
+   ARABALARI SİL
+===================== */
 
-function removeCars() {
+function removeCars(){
 
-    for (let i = 0; i < traffic.length; i++) {
+    traffic.forEach(
+        car =>
+        car.element.remove()
+    );
 
-        traffic[i].element.remove();
-    }
-
-    for (let i = 0; i < policeCars.length; i++) {
-
-        policeCars[i].element.remove();
-    }
+    policeCars.forEach(
+        car =>
+        car.element.remove()
+    );
 
     traffic = [];
     policeCars = [];
